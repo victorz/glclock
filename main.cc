@@ -88,7 +88,7 @@ void handle_events() {
 	while (SDL_PollEvent(&e)) {
 		switch (e.type) {
 		case SDL_QUIT:
-			exit(EXIT_FAILURE);
+			exit(EXIT_SUCCESS);
 			break;
 		}
 	}
