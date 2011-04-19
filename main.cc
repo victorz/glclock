@@ -67,10 +67,11 @@ void resize(int w, int h) {
 }
 
 void display() {
+	size_t i;
 	float *mats[2];
 	mats[0] = hh_mat;
 	mats[1] = mh_mat;
-	size_t i;
+
 	for (i = 0; i < 2; i++) {
 		glLoadMatrixf(mats[i]);
 		glBegin(GL_TRIANGLES);
@@ -96,8 +97,9 @@ void handle_events() {
 int main(int argc, char** argv) {
 
 	SDL_Window* window;
-	initGL();
 	int window_flags;
+
+	initGL();
 	window_flags = SDL_WINDOW_OPENGL;
 	window_flags |= SDL_WINDOW_BORDERLESS;
 	window_flags |= SDL_WINDOW_RESIZABLE;
