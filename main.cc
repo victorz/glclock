@@ -58,6 +58,14 @@ void update_hand_rotation(float* hour_hand_transformation,
 	glGetFloatv(GL_MODELVIEW_MATRIX, minute_hand_transformation);
 }
 
+void resize(int w, int h) {
+	glViewport(0, 0, w, h);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-1, 1, -1, 1, -1.0, 1.0);
+	glMatrixMode(GL_MODELVIEW);
+}
+
 void display() {
 	float *mats[2];
 	mats[0] = hh_mat;
@@ -98,6 +106,8 @@ int main(int argc, char** argv) {
 	window = SDL_CreateWindow("OpenGL Clock",
 	                          SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 	                          window_width, window_height, window_flags);
+
+	resize(window_width, window_height);
 
 	while (true) {
 		handle_events();
