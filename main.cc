@@ -4,8 +4,8 @@
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 
-#define WINDOW_WIDTH 640
-#define WINDOW_HEIGHT 480
+static int window_width = 640;
+static int window_height = 480;
 
 #define HOUR_HAND_SCALE 7.5f
 #define MINUTE_HAND_SCALE 10.0f
@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
 	// window_flags |= SDL_WINDOW_MAXIMIZED;
 	window = SDL_CreateWindow("OpenGL Clock",
 	                          SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-	                          WINDOW_WIDTH, WINDOW_HEIGHT, window_flags);
+	                          window_width, window_height, window_flags);
 
 	while (true) {
 		handle_events();
