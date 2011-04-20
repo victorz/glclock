@@ -164,7 +164,7 @@ int main(int argc, char** argv) {
 		update_hand_rotation(hh_mat, mh_mat);
 		draw();
 		SDL_GL_SwapWindow(window);
-		SDL_Delay(100);
+		SDL_Delay(50);
 	}
 
 	return 0;
