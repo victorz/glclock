@@ -71,7 +71,7 @@ void update_hand_rotation(float* hour_hand_transformation,
 	glRotatef(deg, 0.0f, 0.0f, -1.0f);
 	glScalef(scale_inv, scale_inv, scale_inv);
 	glTranslatef(0.0f, -0.5f, 0.0f);
-	glScalef(1.0f, HOUR_HAND_SCALE, 0.0f);
+	glScalef(1.25f, HOUR_HAND_SCALE, 0.0f);
 
 	glGetFloatv(GL_MODELVIEW_MATRIX, hour_hand_transformation);
 
