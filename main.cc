@@ -145,14 +145,15 @@ int main(int argc, char** argv) {
 	{
 		Uint32 window_flags;
 		window_flags = SDL_WINDOW_OPENGL;
-		window_flags |= SDL_WINDOW_BORDERLESS;
+		// window_flags |= SDL_WINDOW_BORDERLESS;
 		window_flags |= SDL_WINDOW_RESIZABLE;
 		window = SDL_CreateWindow("OpenGL Clock",
 		                          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		                          window_width, window_height, window_flags);
 
 		if (!window) {
-			errx(EXIT_FAILURE, "Couldn't create OpenGL window.\n");
+			errx(EXIT_FAILURE, "Couldn't create OpenGL window: %s",
+			     SDL_GetError());
 		}
 	}
 
