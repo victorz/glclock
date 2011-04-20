@@ -16,12 +16,6 @@ static int window_height = 320;
 #define HOUR_HAND_SCALE 5.0f
 #define MINUTE_HAND_SCALE 10.0f
 
-static const float hand[3][2] = {
-	{-0.5f, 0.0f},
-	{ 0.5f, 0.0f},
-	{ 0.5f, 1.0f}
-};
-
 // Hour and minute hand transformation matrices.
 static float hh_mat[16];
 static float mh_mat[16];
@@ -41,9 +35,9 @@ void initGL() {
 		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8)              ||
 		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8)            ||
 		SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8)             ||
-		// SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1)    ||
-		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1)    ||
-		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4)    ||
+		SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1)    ||
+		// SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1)    ||
+		// SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4)    ||
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1)          ||
 		false
 		)
@@ -102,7 +96,7 @@ void draw() {
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	glColor3f(0.0f, 0.0f, 0.0f);
+	glColor3f(0.5f, 0.5f, 0.5f);
 
 	// Draw face ticks.
 	for (i = 1; i <= 12; ++i) {
@@ -134,6 +128,8 @@ void draw() {
 		glVertex2f(-0.05f, 1.0f);
 		glEnd();
 	}
+
+	glColor3f(0.0f, 0.0f, 0.0f);
 
 	// Draw hands.
 	for (i = 0; i < 2; ++i) {
