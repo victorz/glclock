@@ -21,7 +21,6 @@ static float hh_mat[16];
 static float mh_mat[16];
 
 void exit_func() {
-	fputs("Exiting...\n", stderr);
 	SDL_Quit();
 }
 
