@@ -4,10 +4,16 @@
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 
-static int window_width = 640;
-static int window_height = 480;
+#define eprintf(fmt, ...) \
+	fprintf(stderr, fmt, ##__VA_ARGS__)
+#define DEBUG eprintf
 
-#define HOUR_HAND_SCALE 7.5f
+#define MAX(a, b) ((a) < (b) ? (b) : (a))
+
+static int window_width = 320;
+static int window_height = 320;
+
+#define HOUR_HAND_SCALE 5.0f
 #define MINUTE_HAND_SCALE 10.0f
 
 static const float hand[3][2] = {
@@ -16,11 +22,12 @@ static const float hand[3][2] = {
 	{ 0.5f, 1.0f}
 };
 
-// hour and minute hand transformation matrices;
+// Hour and minute hand transformation matrices.
 static float hh_mat[16];
 static float mh_mat[16];
 
 void exit_func() {
+	fputs("Exiting...\n", stderr);
 	SDL_Quit();
 }
 
@@ -44,25 +51,30 @@ void initGL() {
 
 void update_hand_rotation(float* hour_hand_transformation,
                           float* minute_hand_transformation) {
-	float rad;
+	float deg;
+	float scale_inv;
 	struct tm *tm;
 	time_t t;
 	time(&t);
 	tm = localtime(&t);
 
-	glLoadIdentity();
+	scale_inv = 1.0f/MAX(HOUR_HAND_SCALE, MINUTE_HAND_SCALE);
 
-	rad = (2.0*M_PI) * tm->tm_hour/24.0 + tm->tm_min/(24.0*60.0);
-	glRotatef(rad, 0.0f, 0.0f, -1.0f);
+	deg = 360.0 * (tm->tm_hour/12.0 + tm->tm_min/(12.0*60.0));
+
+	glLoadIdentity();
+	glRotatef(deg, 0.0f, 0.0f, -1.0f);
+	glScalef(scale_inv, scale_inv, scale_inv);
 	glTranslatef(0.0f, -0.5f, 0.0f);
 	glScalef(1.0f, HOUR_HAND_SCALE, 0.0f);
 
 	glGetFloatv(GL_MODELVIEW_MATRIX, hour_hand_transformation);
 
-	glLoadIdentity();
+	deg = 360.0 * (tm->tm_min/60.0 + tm->tm_sec/3600.0);
 
-	rad = (2.0*M_PI) * tm->tm_min/60.0;
-	glRotatef(rad, 0.0f, 0.0f, -1.0f);
+	glLoadIdentity();
+	glRotatef(deg, 0.0f, 0.0f, -1.0f);
+	glScalef(scale_inv, scale_inv, scale_inv);
 	glTranslatef(0.0f, -0.5f, 0.0f);
 	glScalef(1.0f, MINUTE_HAND_SCALE, 0.0f);
 
