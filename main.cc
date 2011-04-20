@@ -14,7 +14,7 @@ static int window_width = 320;
 static int window_height = 320;
 
 #define HOUR_HAND_SCALE 5.0f
-#define MINUTE_HAND_SCALE 10.0f
+#define MINUTE_HAND_SCALE 7.0f
 
 // Hour and minute hand transformation matrices.
 static float hh_mat[16];
@@ -156,7 +156,6 @@ void handle_events() {
 				window_width = e.window.data1;
 				window_height = e.window.data2;
 				resize(window_width, window_height);
-				DEBUG("New window size: %dx%d\n", window_width, window_height);
 			}
 			break;
 		}
