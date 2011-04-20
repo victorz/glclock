@@ -35,14 +35,13 @@ void initGL() {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0)
 		errx(EXIT_FAILURE, "Unable to init SDL: %s\n", SDL_GetError());
 
-	if (
-		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8) ||
-		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8) ||
-		SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8) ||
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2) ||
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1) ||
-		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1)
-		) {
+	if (SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8) ||
+	    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8) ||
+	    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8) ||
+	    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4) ||
+	    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1) ||
+	    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1))
+	{
 		errx(EXIT_FAILURE, "Couldn't set GL attributes: %s\n", SDL_GetError());
 	}
 
@@ -100,10 +99,11 @@ void draw() {
 	glColor3f(0.0f, 0.0f, 0.0f);
 	for (i = 0; i < 2; i++) {
 		glLoadMatrixf(mats[i]);
-		glBegin(GL_TRIANGLES);
-		glVertex2f(-0.5f, 0.0f);
-		glVertex2f( 0.5f, 0.0f);
-		glVertex2f( 0.0f, 1.0f);
+		glBegin(GL_QUADS);
+		glVertex2f(-0.1f, 0.0f);
+		glVertex2f( 0.1f, 0.0f);
+		glVertex2f( 0.1f, 1.0f);
+		glVertex2f(-0.1f, 1.0f);
 		glEnd();
 	}
 }
