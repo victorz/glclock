@@ -104,17 +104,6 @@ void draw() {
 
 	glColor3f(0.0f, 0.0f, 0.0f);
 
-	// Draw hands.
-	for (i = 0; i < 2; ++i) {
-		glLoadMatrixf(mats[i]);
-		glBegin(GL_QUADS);
-		glVertex2f(-0.1f, 0.0f);
-		glVertex2f( 0.1f, 0.0f);
-		glVertex2f( 0.1f, 1.0f);
-		glVertex2f(-0.1f, 1.0f);
-		glEnd();
-	}
-
 	// Draw face ticks.
 	for (i = 1; i <= 12; ++i) {
 		glLoadIdentity();
@@ -143,6 +132,17 @@ void draw() {
 		glVertex2f( 0.05f, 0.0f);
 		glVertex2f( 0.05f, 1.0f);
 		glVertex2f(-0.05f, 1.0f);
+		glEnd();
+	}
+
+	// Draw hands.
+	for (i = 0; i < 2; ++i) {
+		glLoadMatrixf(mats[i]);
+		glBegin(GL_QUADS);
+		glVertex2f(-0.1f, 0.0f);
+		glVertex2f( 0.1f, 0.0f);
+		glVertex2f( 0.1f, 1.0f);
+		glVertex2f(-0.1f, 1.0f);
 		glEnd();
 	}
 }
