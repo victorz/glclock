@@ -95,7 +95,7 @@ void resize(int w, int h) {
 }
 
 void draw() {
-	size_t i;
+	size_t i, j;
 	float *mats[2];
 	mats[0] = hh_mat;
 	mats[1] = mh_mat;
@@ -103,13 +103,46 @@ void draw() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glColor3f(0.0f, 0.0f, 0.0f);
-	for (i = 0; i < 2; i++) {
+
+	// Draw hands.
+	for (i = 0; i < 2; ++i) {
 		glLoadMatrixf(mats[i]);
 		glBegin(GL_QUADS);
 		glVertex2f(-0.1f, 0.0f);
 		glVertex2f( 0.1f, 0.0f);
 		glVertex2f( 0.1f, 1.0f);
 		glVertex2f(-0.1f, 1.0f);
+		glEnd();
+	}
+
+	// Draw face ticks.
+	for (i = 1; i <= 12; ++i) {
+		glLoadIdentity();
+		glRotatef(i * (360.0f/12.0f), 0.0f, 0.0f, -1.0f);
+
+		// Draw minute ticks.
+		for (j = 1; j <= 4; ++j) {
+			glPushMatrix();
+			glRotatef(j * (360.0f/60.0f), 0.0f, 0.0f, 1.0f);
+			glTranslatef(0.0f, 0.85f, 0.0f);
+			glScalef(0.05f, 0.05f, 0.0f);
+			glBegin(GL_QUADS);
+			glVertex2f(-0.1f, 0.0f);
+			glVertex2f( 0.1f, 0.0f);
+			glVertex2f( 0.1f, 1.0f);
+			glVertex2f(-0.1f, 1.0f);
+			glEnd();
+			glPopMatrix();
+		}
+
+		// Draw hour ticks.
+		glTranslatef(0.0f, 0.8f, 0.0f);
+		glScalef(0.1f, 0.1f, 0.0f);
+		glBegin(GL_QUADS);
+		glVertex2f(-0.05f, 0.0f);
+		glVertex2f( 0.05f, 0.0f);
+		glVertex2f( 0.05f, 1.0f);
+		glVertex2f(-0.05f, 1.0f);
 		glEnd();
 	}
 }
