@@ -90,6 +90,14 @@ void handle_events() {
 		case SDL_QUIT:
 			exit(EXIT_SUCCESS);
 			break;
+		case SDL_WINDOWEVENT:
+			if (e.window.event == SDL_WINDOWEVENT_RESIZED) {
+				window_width = e.window.data1;
+				window_height = e.window.data2;
+				resize(window_width, window_height);
+				DEBUG("New window size: %dx%d\n", window_width, window_height);
+			}
+			break;
 		}
 	}
 }
