@@ -89,12 +89,15 @@ void resize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void display() {
+void draw() {
 	size_t i;
 	float *mats[2];
 	mats[0] = hh_mat;
 	mats[1] = mh_mat;
 
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glColor3f(0.0f, 0.0f, 0.0f);
 	for (i = 0; i < 2; i++) {
 		glLoadMatrixf(mats[i]);
 		glBegin(GL_TRIANGLES);
@@ -128,25 +131,40 @@ void handle_events() {
 int main(int argc, char** argv) {
 
 	SDL_Window* window;
-	int window_flags;
+	SDL_GLContext context;
 
 	initGL();
-	window_flags = SDL_WINDOW_OPENGL;
-	window_flags |= SDL_WINDOW_BORDERLESS;
-	window_flags |= SDL_WINDOW_RESIZABLE;
-	// window_flags |= SDL_WINDOW_FULLSCREEN;
-	// window_flags |= SDL_WINDOW_MAXIMIZED;
-	window = SDL_CreateWindow("OpenGL Clock",
-	                          SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-	                          window_width, window_height, window_flags);
+
+	// Create window.
+	{
+		Uint32 window_flags;
+		window_flags = SDL_WINDOW_OPENGL;
+		window_flags |= SDL_WINDOW_BORDERLESS;
+		window_flags |= SDL_WINDOW_RESIZABLE;
+		window = SDL_CreateWindow("OpenGL Clock",
+		                          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+		                          window_width, window_height, window_flags);
+
+		if (!window) {
+			errx(EXIT_FAILURE, "Couldn't create OpenGL window.\n");
+		}
+	}
+
+	// Create OpenGL context.
+	context = SDL_GL_CreateContext(window);
+
+	SDL_GL_SetSwapInterval(1);
 
 	resize(window_width, window_height);
+
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 	while (true) {
 		handle_events();
 		update_hand_rotation(hh_mat, mh_mat);
-		display();
-		SDL_Delay(5);
+		draw();
+		SDL_GL_SwapWindow(window);
+		SDL_Delay(100);
 	}
 
 	return 0;
